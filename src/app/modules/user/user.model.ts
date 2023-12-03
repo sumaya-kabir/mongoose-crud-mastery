@@ -33,7 +33,7 @@ const orderSchema = new Schema<TOrder>({
     }
 });
 
-const userSchema = new Schema<TUser>({
+const userSchema = new Schema<TUser, UserModel>({
     userId: {
         type: Number,
         unique: true,
@@ -63,9 +63,9 @@ const userSchema = new Schema<TUser>({
     orders: [orderSchema]
 });
 
-userSchema.statics.isUserExists = async function (id: number) {
-    const existingUser = await User.findOne({id});
-    return existingUser;
+userSchema.statics.isUserExists = async function (userId: number) {
+    const existingUser = await User.findOne({userId});
+    return !!existingUser;
 }
 
 export const User = model<TUser, UserModel>('User', userSchema )
