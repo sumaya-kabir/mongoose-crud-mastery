@@ -10,28 +10,25 @@ const fullNmaeSchema = new Schema<TFullname>({
         type: String,
         required: true
     },
-});
+}, {_id: false});
 
 const addressSchema = new Schema<TAddress>({
     street: String,
     city: String,
     country: String,
-});
+}, {_id: false});
 
 const orderSchema = new Schema<TOrder>({
     productName: {
         type: String,
-        required: true,
     },
     price: {
         type: Number,
-        required: true,
     },
     quantity: {
         type: Number,
-        required: true,
     }
-});
+}, {_id: false});
 
 const userSchema = new Schema<TUser, UserModel>({
     userId: {
@@ -60,7 +57,7 @@ const userSchema = new Schema<TUser, UserModel>({
     },
     hobbies: [String],
     address: addressSchema,
-    orders: [orderSchema]
+    orders: [orderSchema] || []
 });
 
 userSchema.statics.isUserExists = async function (userId: number) {
