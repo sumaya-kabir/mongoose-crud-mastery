@@ -1,27 +1,28 @@
-import { Request, Response } from "express";
-import { UserServices } from "./user.service";
+import { Request, Response } from 'express';
+import { UserServices } from './user.service';
+import userValidationSchema from './user.validation';
 
 const createNewUser = async (req: Request, res: Response) => {
-    try {
-        const {user} = req.body;
+  try {
+    const { user } = req.body;
 
-        const result = await UserServices.createNewUserToDB(user);
+    const result = await UserServices.createNewUserToDB(user);
 
-        res.status(200).json({
-            success: true,
-            message: 'User is created succesfully',
-            data: result,
-          });
-        } catch (err: any) {
-          res.status(404).json({
-            success: false,
-            message: err.message || 'User not found!',
-            error: {
-                code: 404,
-                description: 'User Not found!'
-            },
-          });
-        }
+    res.status(200).json({
+      success: true,
+      message: 'User is created succesfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(404).json({
+      success: false,
+      message: err.message || 'User not found!',
+      error: {
+        code: 404,
+        description: 'User Not found!',
+      },
+    });
+  }
 };
 
 const getAllUsers = async (req: Request, res: Response) => {
@@ -38,8 +39,8 @@ const getAllUsers = async (req: Request, res: Response) => {
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
@@ -61,36 +62,35 @@ const getSingleUser = async (req: Request, res: Response) => {
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
 };
 
-
 const updateUserData = async (req: Request, res: Response) => {
-    try{
-      const {userId} = req.params;
-      const {user} = req.body;
+  try {
+    const { userId } = req.params;
+    const { user } = req.body;
 
-      const result = await UserServices.updateUserFromDB(userId, user);
+    const result = await UserServices.updateUserFromDB(userId, user);
 
-      res.status(200).json({
-        success: true,
-        message: 'User is updated succesfully',
-        data: result,
+    res.status(200).json({
+      success: true,
+      message: 'User is updated succesfully',
+      data: result,
     });
-    } catch (err: any) {
-      res.status(404).json({
+  } catch (err: any) {
+    res.status(404).json({
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
-}
+  }
 };
 
 const deleteUser = async (req: Request, res: Response) => {
@@ -109,38 +109,37 @@ const deleteUser = async (req: Request, res: Response) => {
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
 };
 
 const addUserOrder = async (req: Request, res: Response) => {
-  try{
-    const {userId} = req.params;
-    const {user, productName, price , quantity} = req.body;
+  try {
+    const { userId } = req.params;
+    const orderData = req.body;
 
-    const result = await UserServices.addOrderToDB(user, userId, productName, price, quantity);
+    const zodParseData = userValidationSchema.parse(orderData);
 
+    const result = await UserServices.addOrderToDB(zodParseData, userId);
     res.status(200).json({
       success: true,
       message: 'Order created succesfully',
-      data: result,
-  })
-
-  } catch(err: any) {
-      res.status(404).json({
+      data: null,
+    });
+  } catch (err: any) {
+    res.status(404).json({
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
-} ;
-
+};
 
 const getOrders = async (req: Request, res: Response) => {
   try {
@@ -151,20 +150,19 @@ const getOrders = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: 'Order fetched succesfully',
-      data: {orders},
+      data: { orders },
     });
   } catch (err: any) {
     res.status(404).json({
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
 };
-
 
 const getTotalPrice = async (req: Request, res: Response) => {
   try {
@@ -182,21 +180,20 @@ const getTotalPrice = async (req: Request, res: Response) => {
       success: false,
       message: err.message || 'User not found!',
       error: {
-          code: 404,
-          description: 'User Not found!'
+        code: 404,
+        description: 'User Not found!',
       },
     });
   }
 };
 
-
 export const UserController = {
-    createNewUser,
-    getAllUsers,
-    getSingleUser,
-    updateUserData,
-    deleteUser,
-    addUserOrder,
-    getOrders,
-    getTotalPrice
-}
+  createNewUser,
+  getAllUsers,
+  getSingleUser,
+  updateUserData,
+  deleteUser,
+  addUserOrder,
+  getOrders,
+  getTotalPrice,
+};
