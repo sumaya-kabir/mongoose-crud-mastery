@@ -28,3 +28,10 @@ To run the application locally:
 ```bash
 npm start
 
+## Development
+
+For development with automatic reload (using `ts-node-dev`):
+
+```bash
+npm run start:dev
+
