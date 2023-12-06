@@ -6,13 +6,13 @@
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/your-repository.git
+    git clone https://github.com/sumaya-kabir/mongoose-crud-mastery.git
     ```
 
 2. **Navigate to the project directory:**
 
     ```bash
-    cd your-project-directory
+    cd mongoose-crud-mastery
     ```
 
 3. **Install dependencies:**
