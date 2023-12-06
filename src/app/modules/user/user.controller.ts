@@ -4,7 +4,7 @@ import userValidationSchema from './user.validation';
 
 const createNewUser = async (req: Request, res: Response) => {
   try {
-    const { user } = req.body;
+    const user = req.body;
 
     const result = await UserServices.createNewUserToDB(user);
 
@@ -72,7 +72,7 @@ const getSingleUser = async (req: Request, res: Response) => {
 const updateUserData = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
-    const { user } = req.body;
+    const user = req.body;
 
     const result = await UserServices.updateUserFromDB(userId, user);
 
@@ -121,9 +121,9 @@ const addUserOrder = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const orderData = req.body;
 
-    const zodParseData = userValidationSchema.parse(orderData);
+    // const zodParseData = userValidationSchema.parse(orderData);
 
-    const result = await UserServices.addOrderToDB(zodParseData, userId);
+    const result = await UserServices.addOrderToDB(orderData, userId);
     res.status(200).json({
       success: true,
       message: 'Order created succesfully',
