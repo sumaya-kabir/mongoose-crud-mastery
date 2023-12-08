@@ -143,8 +143,8 @@ const addUserOrder = async (req: Request, res: Response) => {
     const zodParseData = userValidationSchema.parse(orderData);
 
     const result = await UserServices.addOrderToDB(
-      zodParseData,
       zodParseUserId,
+      zodParseData,
     );
     res.status(200).json({
       success: true,
