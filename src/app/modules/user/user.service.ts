@@ -1,6 +1,7 @@
 import { TUser } from './user.interface';
 import { User } from './user.model';
 
+// Create a new user to Database
 const createNewUserToDB = async (userData: TUser) => {
   const result = await User.create(userData);
 
@@ -9,11 +10,13 @@ const createNewUserToDB = async (userData: TUser) => {
   return userDataWithoutPassword;
 };
 
+// Get all users from database
 const getAllUsersFromDB = async () => {
   const result = await User.find({}, 'username fullName age email address');
   return result;
 };
 
+// Get Single Users data from database
 const getSingleUserFromDB = async (userId: any) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -23,6 +26,7 @@ const getSingleUserFromDB = async (userId: any) => {
   return result;
 };
 
+// Update user data from database
 const updateUserFromDB = async (userId: any, userData: TUser) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -36,6 +40,7 @@ const updateUserFromDB = async (userId: any, userData: TUser) => {
   return result;
 };
 
+// delete user data from database
 const deleteUserFromDB = async (userId: any) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -45,6 +50,7 @@ const deleteUserFromDB = async (userId: any) => {
   return result;
 };
 
+// add new order to the database
 const addOrderToDB = async (orderData: any, userId: any) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -63,6 +69,7 @@ const addOrderToDB = async (orderData: any, userId: any) => {
   return newProduct;
 };
 
+// Get order data for a particular user from database
 const getOrdersFromDB = async (userId: any) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -72,6 +79,7 @@ const getOrdersFromDB = async (userId: any) => {
   return result?.orders;
 };
 
+// Calculate total price
 const getTotalPriceFromDB = async (userId: any) => {
   const userExists = await User.isUserExists(userId);
   if (!userExists) {
@@ -80,11 +88,11 @@ const getTotalPriceFromDB = async (userId: any) => {
 
   const user = await User.findOne({ userId });
 
-  if (!user?.orders || user.orders.length === 0) {
+  if (!user?.orders || user?.orders.length === 0) {
     return { totalPrice: 0 };
   }
 
-  const totalPrice = user.orders.reduce(
+  const totalPrice = user?.orders.reduce(
     (acc: number, order) => acc + order.price * order.quantity,
     0,
   );

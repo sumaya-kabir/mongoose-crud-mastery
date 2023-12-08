@@ -78,6 +78,7 @@ const userSchema = new Schema<TUser, UserModel>({
   },
 });
 
+// create custom static method
 userSchema.statics.isUserExists = async function (userId: number) {
   const existingUser = await User.findOne({ userId });
   return !!existingUser;
