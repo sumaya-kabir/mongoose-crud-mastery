@@ -59,6 +59,14 @@ const addOrderToDB = async (orderData: any, userId: any) => {
   const newProduct = orderData;
   const user = await User.findOne({ userId });
 
+  if (!user) {
+    throw new Error();
+  }
+
+  if (!user.orders) {
+    user.orders = [];
+  }
+
   user?.orders.push(newProduct);
 
   await User.findOneAndUpdate(
@@ -88,14 +96,17 @@ const getTotalPriceFromDB = async (userId: any) => {
 
   const user = await User.findOne({ userId });
 
-  if (!user?.orders || user?.orders.length === 0) {
+  if (!user?.orders || user.orders.length === 0) {
     return { totalPrice: 0 };
   }
 
-  const totalPrice = user?.orders.reduce(
-    (acc: number, order) => acc + order.price * order.quantity,
-    0,
-  );
+  const totalPrice = user.orders.reduce((acc: number, order) => {
+    // using nullish coalescing for handling undefined values
+    const price = order.price ?? 0;
+    const quantity = order.quantity ?? 0;
+
+    return acc + price * quantity;
+  }, 0);
   return { totalPrice };
 };
 
