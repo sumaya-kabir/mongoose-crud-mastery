@@ -55,9 +55,9 @@ const getSingleUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const zodParseData = userValidationSchema.parse(userId);
+    // const zodParseData = userValidationSchema.parse(userId);
 
-    const result = await UserServices.getSingleUserFromDB(zodParseData);
+    const result = await UserServices.getSingleUserFromDB(userId);
 
     res.status(200).json({
       success: true,
@@ -82,13 +82,10 @@ const updateUserData = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const user = req.body;
 
-    const zodParseUserId = userValidationSchema.parse(userId);
-    const zodParseUserData = userValidationSchema.parse(user);
+    // const zodParseUserId = userValidationSchema.parse(userId);
+    // const zodParseUserData = userValidationSchema.parse(user);
 
-    const result = await UserServices.updateUserFromDB(
-      zodParseUserId,
-      zodParseUserData,
-    );
+    const result = await UserServices.updateUserFromDB(userId, user);
 
     res.status(200).json({
       success: true,
@@ -112,9 +109,9 @@ const deleteUser = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const zodParseUserId = userValidationSchema.parse(userId);
+    // const zodParseUserId = userValidationSchema.parse(userId);
 
-    const result = await UserServices.deleteUserFromDB(zodParseUserId);
+    const result = await UserServices.deleteUserFromDB(userId);
 
     res.status(200).json({
       success: true,
@@ -139,13 +136,10 @@ const addUserOrder = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const orderData = req.body;
 
-    const zodParseUserId = userValidationSchema.parse(userId);
-    const zodParseData = userValidationSchema.parse(orderData);
+    // const zodParseUserId = userValidationSchema.parse(userId);
+    // const zodParseData = userValidationSchema.parse(orderData);
 
-    const result = await UserServices.addOrderToDB(
-      zodParseUserId,
-      zodParseData,
-    );
+    const result = await UserServices.addOrderToDB(userId, orderData);
     res.status(200).json({
       success: true,
       message: 'Order created succesfully',
@@ -168,9 +162,9 @@ const getOrders = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const zodParseUserId = userValidationSchema.parse(userId);
+    // const zodParseUserId = userValidationSchema.parse(userId);
 
-    const orders = await UserServices.getOrdersFromDB(zodParseUserId);
+    const orders = await UserServices.getOrdersFromDB(userId);
 
     res.status(200).json({
       success: true,
@@ -194,9 +188,9 @@ const getTotalPrice = async (req: Request, res: Response) => {
   try {
     const { userId } = req.params;
 
-    const zodParseUserId = userValidationSchema.parse(userId);
+    // const zodParseUserId = userValidationSchema.parse(userId);
 
-    const totalPrice = await UserServices.getTotalPriceFromDB(zodParseUserId);
+    const totalPrice = await UserServices.getTotalPriceFromDB(userId);
 
     res.status(200).json({
       success: true,
