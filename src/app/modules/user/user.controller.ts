@@ -6,6 +6,7 @@ import userValidationSchema from './user.validation';
 const createNewUser = async (req: Request, res: Response) => {
   try {
     const user = req.body;
+    console.log(user);
 
     const zodParseData = userValidationSchema.parse(user);
 
@@ -140,6 +141,7 @@ const addUserOrder = async (req: Request, res: Response) => {
     // const zodParseData = userValidationSchema.parse(orderData);
 
     const result = await UserServices.addOrderToDB(userId, orderData);
+    console.log(req.body);
     res.status(200).json({
       success: true,
       message: 'Order created succesfully',

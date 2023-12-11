@@ -3,7 +3,7 @@ import { UserController } from './user.controller';
 
 const router = express.Router();
 
-router.post('/create-new-user', UserController.createNewUser);
+router.post('/', UserController.createNewUser);
 
 router.get('/', UserController.getAllUsers);
 
@@ -17,7 +17,6 @@ router.put('/:userId/orders', UserController.addUserOrder);
 
 router.get('/:userId/orders', UserController.getOrders);
 
-router.get('/:userId/orders/total-price', UserController.getTotalPrice)
-
+router.get('/:userId/orders/total-price', UserController.getTotalPrice);
 
 export const UserRoutes = router;

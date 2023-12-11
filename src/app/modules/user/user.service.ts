@@ -59,6 +59,8 @@ const addOrderToDB = async (orderData: any, userId: any) => {
   const newProduct = orderData;
   const user = await User.findOne({ userId });
 
+  console.log(user, newProduct);
+
   if (!user) {
     throw new Error();
   }
@@ -67,12 +69,9 @@ const addOrderToDB = async (orderData: any, userId: any) => {
     user.orders = [];
   }
 
-  user?.orders.push(newProduct);
+  user.orders.push(newProduct);
 
-  await User.findOneAndUpdate(
-    { userId },
-    { $addToSet: { orders: user?.orders } },
-  );
+  await User.findOneAndUpdate({ $addToSet: { orders: user.orders } });
 
   return newProduct;
 };
